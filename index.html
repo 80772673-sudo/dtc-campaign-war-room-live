@@ -22,7 +22,7 @@
         <span class="eyebrow">First cohort price</span>
         <strong>$39</strong>
         <p>One-time. No subscription, coupon or bundle in cohort v1.</p>
-        <span class="button disabled">Checkout activating after provider review</span>
+        <a id="checkoutLink" class="button disabled" aria-disabled="true">Checkout activating after provider review</a>
       </aside>
     </section>
 
@@ -50,6 +50,25 @@
     </div></section>
   </main>
   <footer><div class="wrap"><div class="navlinks"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="refund.html">Refunds</a><a href="support.html">Support</a></div><p>Cohort v1 · checkout not yet active.</p></div></footer>
+  <script src="checkout-config.js"></script>
+  <script>
+    (() => {
+      const link = document.getElementById('checkoutLink');
+      const base = window.COHORT_CONFIG?.checkoutBase || '';
+      if (!base) return;
+      const incoming = new URLSearchParams(window.location.search);
+      const checkout = new URL(base);
+      for (const key of ['source','medium','campaign','creative']) {
+        const value = incoming.get(key);
+        if (value) checkout.searchParams.set(`metadata[${key}]`, value.slice(0,120));
+      }
+      checkout.searchParams.set('metadata[cohort_version]', 'warroom39_v1');
+      link.href = checkout.toString();
+      link.textContent = 'Buy cohort v1 — $39 one-time';
+      link.classList.remove('disabled');
+      link.removeAttribute('aria-disabled');
+    })();
+  </script>
 </body>
 </html>
 
