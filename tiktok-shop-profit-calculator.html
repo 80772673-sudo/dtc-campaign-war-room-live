@@ -6,7 +6,7 @@
 <p class="note" id="explanation"></p><h2>Why this is not enough for SCALE</h2><p>A positive contribution calculation is only the economics gate. The War Room adds stock coverage, return risk, evidence quality and a decision log before recommending SCALE.</p></section></main><footer><div class="wrap"><p>Cohort v1 · checkout not yet active.</p></div></footer><script>
 const ids=['price','orders','cogs','shipping','feePct','creatorPct','adSpend','refunds','other']; const n=id=>Number(document.getElementById(id).value)||0; const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
 function calc(){const price=n('price'),orders=n('orders'),gross=price*orders,fee=gross*n('feePct')/100,creator=gross*n('creatorPct')/100,product=n('cogs')*orders,ship=n('shipping')*orders,refunds=n('refunds'),other=n('other'),nonAd=fee+creator+product+ship+refunds+other,breakEven=Math.max(0,gross-nonAd),ad=n('adSpend'),contrib=gross-nonAd-ad,maxCpa=orders>0?breakEven/orders:0;document.getElementById('gross').textContent=money(gross);document.getElementById('contribution').textContent=money(contrib);document.getElementById('breakEvenSpend').textContent=money(breakEven);document.getElementById('maxCpa').textContent=money(maxCpa);document.getElementById('explanation').textContent=`Gross ${money(gross)} − product/fulfillment/fees/creator/refunds/other ${money(nonAd)} − ads ${money(ad)} = contribution ${money(contrib)}. All inputs are user-configured.`} ids.forEach(id=>document.getElementById(id).addEventListener('input',calc));calc();
-</script></body></html>
+</script><script src="qv-config.js"></script><script src="qv-counter.js"></script></body></html>
 
 
 
