@@ -16,13 +16,13 @@
         <div class="eyebrow">TikTok Shop & Ecommerce Decision Cockpit</div>
         <h1>Know what to SCALE / HOLD / FIX / STOP — not just GMV.</h1>
         <p class="lead">Combine ads, creator evidence, returns, variable cost and stock risk into one evidence-bounded daily decision. Keep gross sales separate from contribution.</p>
-        <p class="notice">Public prelaunch verification page. The first $39 cohort has not started yet and checkout is not active; incidental visits before activation are excluded from the 50/100-QV experiment.</p>
+        <p class="notice">Public prelaunch verification page. The production product and payment link are configured, but the first $39 cohort has not started yet; checkout remains gated until provider review and qualified-visitor measurement are both cleared. Incidental visits before activation are excluded from the 50/100-QV experiment.</p>
       </div>
       <aside class="price" id="pricing">
         <span class="eyebrow">First cohort price</span>
         <strong>$39</strong>
         <p>One-time. No subscription, coupon or bundle in cohort v1.</p>
-        <a id="checkoutLink" class="button disabled" aria-disabled="true">Checkout activating after provider review</a>
+        <a id="checkoutLink" class="button disabled" aria-disabled="true">Checkout opens after launch gates clear</a>
       </aside>
     </section>
 
@@ -49,13 +49,14 @@
       <p class="lead">The product helps centralize operating evidence and make decisions consistently. It does <strong>not</strong> promise revenue growth, ROAS improvement, profitability, platform approval or accounting-grade reporting.</p>
     </div></section>
   </main>
-  <footer><div class="wrap"><div class="navlinks"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="refund.html">Refunds</a><a href="support.html">Support</a></div><p>Cohort v1 · checkout not yet active.</p></div></footer>
+  <footer><div class="wrap"><div class="navlinks"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="refund.html">Refunds</a><a href="support.html">Support</a></div><p>Cohort v1 · prelaunch; acquisition and checkout are not active.</p></div></footer>
   <script src="checkout-config.js"></script>
   <script>
     (() => {
       const link = document.getElementById('checkoutLink');
       const base = window.COHORT_CONFIG?.checkoutBase || '';
-      if (!base) return;
+      const cohortActive = window.COHORT_CONFIG?.cohortActive === true;
+      if (!base || !cohortActive) return;
       const incoming = new URLSearchParams(window.location.search);
       const checkout = new URL(base);
       for (const key of ['source','medium','campaign','creative']) {
